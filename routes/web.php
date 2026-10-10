@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArticleController;
 
 // Главная страница: получение публикаций из JSON
 Route::get('/', [MainController::class, 'index'])
@@ -50,3 +51,7 @@ Route::get('/signin', [AuthController::class, 'create'])
 // Обработка формы регистрации
 Route::post('/signin', [AuthController::class, 'registration'])
     ->name('signin.registration');
+
+    // Список новостей из базы данных
+Route::get('/news', [ArticleController::class, 'index'])
+    ->name('news.index');
