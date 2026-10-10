@@ -52,6 +52,6 @@ Route::get('/signin', [AuthController::class, 'create'])
 Route::post('/signin', [AuthController::class, 'registration'])
     ->name('signin.registration');
 
-    // Список новостей из базы данных
-Route::get('/news', [ArticleController::class, 'index'])
-    ->name('news.index');
+  // CRUD-маршруты для новостных публикаций
+Route::resource('news', ArticleController::class)
+    ->parameters(['news' => 'article']);
