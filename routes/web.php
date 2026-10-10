@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\AuthController;
 
 // Главная страница: получение публикаций из JSON
 Route::get('/', [MainController::class, 'index'])
@@ -42,3 +43,10 @@ Route::get('/contacts', function () {
 Route::get('/galery/{id}', [MainController::class, 'show'])
     ->whereNumber('id')
     ->name('galery.show');
+    // Страница регистрации
+Route::get('/signin', [AuthController::class, 'create'])
+    ->name('signin.create');
+
+// Обработка формы регистрации
+Route::post('/signin', [AuthController::class, 'registration'])
+    ->name('signin.registration');
