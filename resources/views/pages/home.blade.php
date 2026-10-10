@@ -3,56 +3,55 @@
 @section('title', 'Главная — Городской вестник')
 
 @section('content')
-    <section class="hero">
+    <section class="news-heading">
         <p class="eyebrow">НОВОСТИ · СОБЫТИЯ · ЛЮДИ</p>
 
-        <h1>Город начинается с новостей</h1>
-
-        <p class="hero-copy">
-            Добро пожаловать на сайт «Городской вестник» —
-            учебный проект новостного портала о событиях,
-            культуре, технологиях и жизни общества.
-        </p>
-
-        <div class="hero-actions">
-            <a class="button" href="{{ route('about') }}">
-                О нашем проекте
-            </a>
-
-            <a class="button button-light" href="{{ route('contacts') }}">
-                Связаться с нами
-            </a>
-        </div>
-    </section>
-
-    <section class="topics-section">
-        <p class="eyebrow">ОТКРЫВАЙТЕ НОВОЕ</p>
-
-        <h2>В центре внимания</h2>
+        <h1>Последние публикации</h1>
 
         <p class="section-description">
-            Мы готовим платформу, на которой в дальнейшем будут
-            публиковаться новости и тематические материалы.
+            Материалы новостного портала о событиях,
+            культуре, технологиях и жизни общества.
         </p>
+    </section>
 
-        <div class="topic-grid">
-            <article class="topic-card">
-                <span class="topic-number">01</span>
-                <h3>Город</h3>
-                <p>События, инициативы и изменения в городской жизни.</p>
-            </article>
+    <section class="news-grid">
+        @forelse ($articles as $index => $article)
+            <article class="news-card">
+                <a
+                    class="news-image-link"
+                    href="{{ route('galery.show', ['id' => $index]) }}"
+                    aria-label="Открыть публикацию: {{ $article['name'] }}"
+                >
+                    <img
+                        class="news-image"
+                        src="{{ asset('images/' . $article['preview_image']) }}"
+                        alt="{{ $article['name'] }}"
+                    >
+                </a>
 
-            <article class="topic-card">
-                <span class="topic-number">02</span>
-                <h3>Культура</h3>
-                <p>Выставки, творческие проекты и культурные события.</p>
-            </article>
+                <div class="news-card-content">
+                    <p class="news-date">{{ $article['date'] }}</p>
 
-            <article class="topic-card">
-                <span class="topic-number">03</span>
-                <h3>Технологии</h3>
-                <p>Новые идеи, цифровые решения и современные разработки.</p>
+                    <h2>
+                        <a href="{{ route('galery.show', ['id' => $index]) }}">
+                            {{ $article['name'] }}
+                        </a>
+                    </h2>
+
+                    <p class="news-description">
+                        {{ $article['shortDesc'] ?? \Illuminate\Support\Str::limit($article['desc'] ?? '', 160) }}
+                    </p>
+
+                    <a
+                        class="news-read-more"
+                        href="{{ route('galery.show', ['id' => $index]) }}"
+                    >
+                        Читать далее →
+                    </a>
+                </div>
             </article>
-        </div>
+        @empty
+            <p>Публикации пока отсутствуют.</p>
+        @endforelse
     </section>
 @endsection

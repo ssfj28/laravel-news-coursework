@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 
-// Главная страница
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
+// Главная страница: получение публикаций из JSON
+Route::get('/', [MainController::class, 'index'])
+    ->name('home');
 
 // Страница «О нас»
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-// Страница «Контакты» с динамическим массивом данных
+// Страница «Контакты»
 Route::get('/contacts', function () {
     $contacts = [
         [
@@ -37,3 +37,8 @@ Route::get('/contacts', function () {
         'contacts' => $contacts,
     ]);
 })->name('contacts');
+
+// Страница просмотра полноразмерного изображения
+Route::get('/galery/{id}', [MainController::class, 'show'])
+    ->whereNumber('id')
+    ->name('galery.show');
